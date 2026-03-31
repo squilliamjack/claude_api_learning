@@ -1,0 +1,7 @@
+{
+    "use_case": "student_feedback_email",
+    "v1": "generating a personalized feedback email for a student after a tutoring session.",
+    "v2": "generating a personalized feedback email for a student after a tutoring session. student name: Wil Jackson. grade: 10. class: high school geometry. topic  covered: basic trig functions. strengths: core algebra and arithmetic. struggles: implementation of trig functions. my name: John Smith. session date: 3/30/2026. homework assigned: 3.1 #1-11 oddnext session date: 4/6/2026. ",
+    "v3": "generating a personalized feedback email for a student after a tutoring session. student name: Wil Jackson. grade: 10. class: high school geometry. topic  covered: basic trig functions. strengths: core algebra and arithmetic. struggles: implementation of trig functions. my name: John Smith. session date: 3/30/2026. homework assigned: 3.1 #1-11 oddnext session date: 4/6/2026. tone preference: warm and encouraging. not too formal. tone reference example: hey Wil! just wanted to say again how great you did during our first session. i really hope we can keep getting you to feel more and more confident in math. i know you can get the hang of it, and you were already starting to catch on to those trig functions even in the first hour!",
+    "notes": "v3 produces best results \u2014 warm tone, specific details, reference example included"
+}
