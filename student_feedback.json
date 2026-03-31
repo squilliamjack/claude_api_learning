@@ -1,0 +1,22 @@
+{
+    "student_name": "Wil Jackson",
+    "topic": "Trigonometric Identities - Pythagorean Identity",
+    "score": 2,
+    "strengths": [
+        "Recognized that sine and cosine are related to each other, demonstrating some conceptual awareness of trigonometric relationships",
+        "Correctly identified that the angle is in Quadrant 1 where both sine and cosine are positive, showing understanding of quadrant signs"
+    ],
+    "gaps": [
+        "Does not know or did not apply the Pythagorean Identity (sin\u00b2\u03b8 + cos\u00b2\u03b8 = 1), which is the fundamental relationship needed to solve this problem",
+        "Incorrectly assumed that 'related' means sine and cosine have equal values, showing a misconception about the nature of their relationship",
+        "Arrived at an incorrect final answer of cos \u03b8 = 1/2 instead of the correct answer cos \u03b8 = \u221a3/2",
+        "May not be familiar with special angle values (30\u00b0, 45\u00b0, 60\u00b0) and their corresponding sine and cosine values"
+    ],
+    "feedback": "You're on the right track recognizing that sine and cosine are related, and your awareness of quadrant signs is good! However, 'related' doesn't mean they're equal. The key relationship you need is the Pythagorean Identity: sin\u00b2\u03b8 + cos\u00b2\u03b8 = 1. Starting with sin \u03b8 = 1/2, you would square it to get 1/4, then solve: 1/4 + cos\u00b2\u03b8 = 1, which gives cos\u00b2\u03b8 = 3/4, so cos \u03b8 = \u221a3/2 (positive in Q1). This is also a special angle (30\u00b0) worth memorizing.",
+    "next_steps": [
+        "Memorize and practice applying the Pythagorean Identity: sin\u00b2\u03b8 + cos\u00b2\u03b8 = 1",
+        "Create a reference chart of special angles (30\u00b0, 45\u00b0, 60\u00b0) with their exact sine and cosine values",
+        "Complete practice problems finding one trigonometric function given another using the Pythagorean Identity",
+        "Review how quadrant location affects the sign (\u00b1) when taking square roots in trigonometric equations"
+    ]
+}
