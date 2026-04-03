@@ -1,7 +1,19 @@
-{
-    "use_case": "student_feedback_email",
-    "v1": "generating a personalized feedback email for a student after a tutoring session.",
-    "v2": "generating a personalized feedback email for a student after a tutoring session. student name: Wil Jackson. grade: 10. class: high school geometry. topic  covered: basic trig functions. strengths: core algebra and arithmetic. struggles: implementation of trig functions. my name: John Smith. session date: 3/30/2026. homework assigned: 3.1 #1-11 oddnext session date: 4/6/2026. ",
-    "v3": "generating a personalized feedback email for a student after a tutoring session. student name: Wil Jackson. grade: 10. class: high school geometry. topic  covered: basic trig functions. strengths: core algebra and arithmetic. struggles: implementation of trig functions. my name: John Smith. session date: 3/30/2026. homework assigned: 3.1 #1-11 oddnext session date: 4/6/2026. tone preference: warm and encouraging. not too formal. tone reference example: hey Wil! just wanted to say again how great you did during our first session. i really hope we can keep getting you to feel more and more confident in math. i know you can get the hang of it, and you were already starting to catch on to those trig functions even in the first hour!",
-    "notes": "v3 produces best results \u2014 warm tone, specific details, reference example included"
-}
+[
+    {
+        "use_case": "student_feedback_email",
+        "v1": "generating a personalized feedback email for a student after a tutoring session.",
+        "v2": "generating a personalized feedback email for a student after a tutoring session. student name: Wil Jackson. grade: 10. class: high school geometry. topic  covered: basic trig functions. strengths: core algebra and arithmetic. struggles: implementation of trig functions. my name: John Smith. session date: 3/30/2026. homework assigned: 3.1 #1-11 oddnext session date: 4/6/2026. ",
+        "v3": "generating a personalized feedback email for a student after a tutoring session. student name: Wil Jackson. grade: 10. class: high school geometry. topic  covered: basic trig functions. strengths: core algebra and arithmetic. struggles: implementation of trig functions. my name: John Smith. session date: 3/30/2026. homework assigned: 3.1 #1-11 oddnext session date: 4/6/2026. tone preference: warm and encouraging. not too formal. tone reference example: hey Wil! just wanted to say again how great you did during our first session. i really hope we can keep getting you to feel more and more confident in math. i know you can get the hang of it, and you were already starting to catch on to those trig functions even in the first hour!",
+        "notes": "v3 produces best results \u2014 warm tone, specific details, reference example included"
+    },
+    {
+        "use_case": "lesson_plan_generator",
+        "v1": "generating lesson plan",
+        "v2": "\n            generating a personalized lesson plan for students;\n            student name: Wil Jackson;\n            student grade: 10;\n            student class: high school geometry;\n            previous lesson: basic trig functions;\n            lesson to generate plan for: inverse trig functions\n        "
+    },
+    {
+        "use_case": "parent_update_email",
+        "v1": "generating parent update email",
+        "v2": "\n            generating personalized parent update email for after session with student;\n            parent name: Shannon Jackson;\n            student name: Wil Jackson;\n            student grade: 10;\n            student class: high school geometry;\n            session topic: basic trig funcitons;\n            strengths: core algebra and arithmetic;\n            struggles: implementation of trig functions;\n            my name: John Smith;\n            session date: 3/30/2026;\n            homework assigned: 3.1 #1-11 odd;\n            next session date: 4/6/2026;\n            tone preference: warm and encouraging. not too formal;\n            tone reference example: Hi Shannon. a quick update on today's session with Wil: Wil did really well with out topic today. He said he was struggling in class, but when we worked through it together he did wonderfully\n        "
+    }
+]

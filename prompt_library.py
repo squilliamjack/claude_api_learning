@@ -43,62 +43,124 @@ client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 # print(message2.content[0].text)
 
-prompt3 = "generating a personalized feedback email for a student after a tutoring session. " \
-"student name: Wil Jackson. " \
-"grade: 10. " \
-"class: high school geometry. " \
-"topic  covered: basic trig functions. " \
-"strengths: core algebra and arithmetic. " \
-"struggles: implementation of trig functions. " \
-"my name: John Smith. " \
-"session date: 3/30/2026. " \
-"homework assigned: 3.1 #1-11 odd" \
-"next session date: 4/6/2026. " \
-"tone preference: warm and encouraging. not too formal. " \
-"tone reference example: hey Wil! just wanted to say again how great you did during our first session. i really hope we can keep getting you to feel more and more confident in math. i know you can get the hang of it, and you were already starting to catch on to those trig functions even in the first hour!"
+# prompt3 = "generating a personalized feedback email for a student after a tutoring session. " \
+# "student name: Wil Jackson. " \
+# "grade: 10. " \
+# "class: high school geometry. " \
+# "topic  covered: basic trig functions. " \
+# "strengths: core algebra and arithmetic. " \
+# "struggles: implementation of trig functions. " \
+# "my name: John Smith. " \
+# "session date: 3/30/2026. " \
+# "homework assigned: 3.1 #1-11 odd" \
+# "next session date: 4/6/2026. " \
+# "tone preference: warm and encouraging. not too formal. " \
+# "tone reference example: hey Wil! just wanted to say again how great you did during our first session. i really hope we can keep getting you to feel more and more confident in math. i know you can get the hang of it, and you were already starting to catch on to those trig functions even in the first hour!"
 
+# prompt4 = """
+#     generating a personalized lesson plan for students.
+#     student name: Wil Jackson
+#     student grade: 10
+#     student class: geometry
+#     previous lesson: triangle similarity
+#     lesson to generate plan for: advanced triangle similarity
+# """
 
-message3 = client.messages.create(
-    model="claude-sonnet-4-5",
-    max_tokens=1024,
-    messages=[
-        {"role": "user", "content": prompt3}
-    ]
-)
+# message3 = client.messages.create(
+#     model="claude-sonnet-4-5",
+#     max_tokens=1024,
+#     messages=[
+#         {"role": "user", "content": prompt4}
+#     ]
+# )
 
-print(message3.content[0].text)
+# print(message3.content[0].text)
 
-library_entry = {
-    "use_case": "student_feedback_email",
-    "v1": "generating a personalized feedback email for a student after a tutoring session.",
-    "v2": "generating a personalized feedback email for a student after a tutoring session. " \
-"student name: Wil Jackson. " \
-"grade: 10. " \
-"class: high school geometry. " \
-"topic  covered: basic trig functions. " \
-"strengths: core algebra and arithmetic. " \
-"struggles: implementation of trig functions. " \
-"my name: John Smith. " \
-"session date: 3/30/2026. " \
-"homework assigned: 3.1 #1-11 odd" \
-"next session date: 4/6/2026. ",
-    "v3": "generating a personalized feedback email for a student after a tutoring session. " \
-"student name: Wil Jackson. " \
-"grade: 10. " \
-"class: high school geometry. " \
-"topic  covered: basic trig functions. " \
-"strengths: core algebra and arithmetic. " \
-"struggles: implementation of trig functions. " \
-"my name: John Smith. " \
-"session date: 3/30/2026. " \
-"homework assigned: 3.1 #1-11 odd" \
-"next session date: 4/6/2026. " \
-"tone preference: warm and encouraging. not too formal. " \
-"tone reference example: hey Wil! just wanted to say again how great you did during our first session. i really hope we can keep getting you to feel more and more confident in math. i know you can get the hang of it, and you were already starting to catch on to those trig functions even in the first hour!",
-    "notes": "v3 produces best results — warm tone, specific details, reference example included"
-}
+library_entry = [
+    {
+        "use_case": "student_feedback_email",
+        "v1": "generating a personalized feedback email for a student after a tutoring session.",
+        "v2": "generating a personalized feedback email for a student after a tutoring session. " \
+        "student name: Wil Jackson. " \
+        "grade: 10. " \
+        "class: high school geometry. " \
+        "topic  covered: basic trig functions. " \
+        "strengths: core algebra and arithmetic. " \
+        "struggles: implementation of trig functions. " \
+        "my name: John Smith. " \
+        "session date: 3/30/2026. " \
+        "homework assigned: 3.1 #1-11 odd" \
+        "next session date: 4/6/2026. ",
+        "v3": "generating a personalized feedback email for a student after a tutoring session. " \
+        "student name: Wil Jackson. " \
+        "grade: 10. " \
+        "class: high school geometry. " \
+        "topic  covered: basic trig functions. " \
+        "strengths: core algebra and arithmetic. " \
+        "struggles: implementation of trig functions. " \
+        "my name: John Smith. " \
+        "session date: 3/30/2026. " \
+        "homework assigned: 3.1 #1-11 odd" \
+        "next session date: 4/6/2026. " \
+        "tone preference: warm and encouraging. not too formal. " \
+        "tone reference example: hey Wil! just wanted to say again how great you did during our first session. i really hope we can keep getting you to feel more and more confident in math. i know you can get the hang of it, and you were already starting to catch on to those trig functions even in the first hour!",
+        "notes": "v3 produces best results — warm tone, specific details, reference example included"
+    },
+    {
+        "use_case": "lesson_plan_generator",
+        "v1": "generating lesson plan",
+        "v2": """
+            generating a personalized lesson plan for students;
+            student name: Wil Jackson;
+            student grade: 10;
+            student class: high school geometry;
+            previous lesson: basic trig functions;
+            lesson to generate plan for: inverse trig functions
+        """
+    },
+    {
+        "use_case": "parent_update_email",
+        "v1": "generating parent update email",
+        "v2": """
+            generating personalized parent update email for after session with student;
+            parent name: Shannon Jackson;
+            student name: Wil Jackson;
+            student grade: 10;
+            student class: high school geometry;
+            session topic: basic trig funcitons;
+            strengths: core algebra and arithmetic;
+            struggles: implementation of trig functions;
+            my name: John Smith;
+            session date: 3/30/2026;
+            homework assigned: 3.1 #1-11 odd;
+            next session date: 4/6/2026;
+            tone preference: warm and encouraging. not too formal;
+            tone reference example: Hi Shannon. a quick update on today's session with Wil: Wil did really well with out topic today. He said he was struggling in class, but when we worked through it together he did wonderfully
+        """
+    }
+]
 
 with open("prompt_library.json", "w") as f:
     json.dump(library_entry, f, indent=4)
 
+def load_prompt(use_case, version):
+    with open("prompt_library.json", "r") as f:
+        library = json.load(f)
+    for entry in library:
+        if entry["use_case"] == use_case:
+            return entry.get(version)
+    return None
+
 print("Prompt library saved.")
+prompt = load_prompt("parent_update_email", "v2")
+print(prompt)
+
+message = client.messages.create(
+    model="claude-sonnet-4-5",
+    max_tokens=1024,
+    messages=[
+        {"role": "user", "content": prompt}
+    ]
+)
+
+print(message.content[0].text)
