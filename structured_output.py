@@ -1,3 +1,9 @@
+"""
+Structured JSON output pipeline.
+2-step prompt chain: Step 1 analyzes a student's math answer,
+Step 2 returns structured JSON feedback saved to student_feedback.json.
+"""
+
 import anthropic 
 import os
 from dotenv import load_dotenv
@@ -27,7 +33,7 @@ step2 = client.messages.create(
     max_tokens=1024,
     system="You must return only raw JSON with no markdown formatting, no code fences, and no other text.", 
     messages=[
-        {"role": "user", "content": f"return a JSON file that contains the followwing based on {analysis}: student_name, topic, score, strengths, gaps, feedback, next_steps"}
+        {"role": "user", "content": f"return a JSON file that contains the following based on {analysis}: student_name, topic, score, strengths, gaps, feedback, next_steps"}
     ]
 )
 

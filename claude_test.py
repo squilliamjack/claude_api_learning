@@ -1,3 +1,8 @@
+"""
+First Claude API call.
+Sends a single message to Claude and prints the response.
+"""
+
 import anthropic
 import os
 from dotenv import load_dotenv

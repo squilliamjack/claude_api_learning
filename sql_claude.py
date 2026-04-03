@@ -1,3 +1,9 @@
+"""
+SQL + Claude integration.
+Queries a SQLite student database for session history,
+then passes the results to Claude to generate a progress summary.
+"""
+
 import anthropic
 import os
 from dotenv import load_dotenv
