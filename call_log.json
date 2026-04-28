@@ -1,0 +1,16 @@
+[
+    {
+        "model name": "claude-haiku-4-5-20251001",
+        "input tokens": 31,
+        "output tokens": 334,
+        "timestamp": "2026-04-27T18:07:46.998259",
+        "prompt": "A 9th grade student is struggling with solving two-step equations. Explain the concept and give one example."
+    },
+    {
+        "model name": "claude-sonnet-4-6",
+        "input tokens": 31,
+        "output tokens": 352,
+        "timestamp": "2026-04-27T18:07:46.999072",
+        "prompt": "A 9th grade student is struggling with solving two-step equations. Explain the concept and give one example."
+    }
+]
