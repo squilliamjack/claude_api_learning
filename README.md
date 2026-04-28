@@ -18,7 +18,6 @@ A collection of Python scripts built while learning the Anthropic Claude API.
 pip install anthropic python-dotenv requests
 3. Create a `.env` file in the root folder with the following:
 ANTHROPIC_API_KEY=your_key_here
-OPENWEATHER_API_KEY=your_key_here
 4. Run any script with:
 python script_name.py 
 
