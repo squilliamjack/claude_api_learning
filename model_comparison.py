@@ -5,7 +5,6 @@ import json
 from datetime import datetime
 
 load_dotenv()
-log=[]
 
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
@@ -45,6 +44,12 @@ print("---\n")
 print(f"OUTPUT TOKENS: {sonnet_response.usage.output_tokens}")
 
 def log_call(prompt, response):
+
+    """
+    This function takes a prompt and the AI-generated response and writes the model name, 
+    number of input and output tokens, timestamp and prompt itself to call_log.json
+    """
+
     log_entry = {
         "model name": response.model,
         "input tokens": response.usage.input_tokens,
