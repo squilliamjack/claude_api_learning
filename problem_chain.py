@@ -9,17 +9,21 @@ import os
 from dotenv import load_dotenv
 import json
 import base64
+import sys
 
 load_dotenv()
 
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
+file_name = input("Please type the name of the file you wish to upload: ")
+
 try:
-    with open("example_math_problem.png", "rb") as f:
+    with open(file_name, "rb") as f:
         image = f.read()
         image_data = base64.b64encode(image).decode("utf-8")
 except FileNotFoundError:
     print("Image not found.")
+    sys.exit()
 
 model = "claude-sonnet-4-6"
 tokens = 1024
@@ -49,6 +53,22 @@ prompt1 = """
 
 """ 
 
+error_prompt = """
+                You were asked to respond in raw JSON only with no markdown and no code fences and no explanation. 
+                Your response triggered json.JSONDecodeError which means you did not do this properly. 
+                Retry and follow these exact instructions:
+                
+                <instructions>
+                Respond in raw JSON only 
+                </instructions>
+
+                <DO_NOT_INCLUDE>
+                1. Markdown
+                2. Code fences
+                3. Explaination 
+                </DO_NOT_INCLUDE>
+"""
+
 image_input = client.messages.create(
     model = model,
     max_tokens = tokens,
@@ -74,7 +94,50 @@ image_input = client.messages.create(
 )
 
 raw_response1 = image_input.content[0].text
-parsed_response1 = json.loads(raw_response1)
+
+t = 0
+while t < 3:
+    try:
+        parsed_response1 = json.loads(raw_response1)
+        break
+    except json.JSONDecodeError:
+        t += 1
+        image_input = client.messages.create(
+            model = model,
+            max_tokens = tokens,
+            messages = [
+                {
+                    "role": "user", "content": [
+                        {
+                            "type": "image",
+                            "source": {
+                                "type": "base64",
+                                "media_type": "image/png",
+                                "data": image_data
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "text": prompt1
+                        }
+
+                    ],
+                },
+                {
+                    "role": "assistant", "content": image_input.content[0].text
+                },
+                {
+                    "role": "user", "content": error_prompt
+                }
+            ]
+        )
+        raw_response1 = image_input.content[0].text
+
+if t == 3:
+    print("Error: Failed to get valid JSON after 3 attempts.")
+    sys.exit()
+
+
 
 prompt2 = f"""
             Your job is to respond with 3 practice problems in md format based on an example problem given by the following dictionary:
@@ -107,3 +170,6 @@ practice_problems = client.messages.create(
 )
 
 print(practice_problems.content[0].text)
+
+with open("practice_problems.md", "w", encoding="utf-8") as f:
+    f.write(practice_problems.content[0].text)
