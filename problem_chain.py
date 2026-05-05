@@ -11,6 +11,7 @@ import json
 import base64
 import sys
 import sqlite3
+from datetime import datetime
 
 load_dotenv()
 
@@ -33,6 +34,23 @@ def get_student_info(student_name):
     results = cursor.fetchall()
     conn.close()
     return results
+
+def log_student_session(student_id, topic, performance):
+    
+    """
+    This function takes student_id, topic, and performance as arguments
+    and connects to students.db and adds a new row in sessions based on 
+    the provided information
+    """
+    
+    conn = sqlite3.connect("students.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO sessions (student_id, date, topic, performance)
+        VALUES (?, ?, ?, ?)                           
+    """, (student_id, datetime.now().strftime("%Y-%m-%d"), topic, performance))
+    conn.commit()
+    conn.close()
 
 file_name = input("Please type the name of the file you wish to upload: ")
 print("\n---\n")
@@ -198,5 +216,8 @@ practice_problems = client.messages.create(
 
 print(practice_problems.content[0].text)
 
-with open("practice_problems.md", "w", encoding="utf-8") as f:
+output_file_name = f"{student_info[0][1]}_{datetime.now().strftime('%Y-%m-%d')}.md"
+with open(output_file_name, "w", encoding="utf-8") as f:
     f.write(practice_problems.content[0].text)
+    
+log_student_session(student_info[0][0], parsed_response1["topic"], "Pending")
