@@ -10,9 +10,9 @@ A collection of Python scripts built while learning the Anthropic Claude API.
 - **prompt_library.py** - stores reusable prompt templates for 3 different use cases (student feedback email, parent update email and lesson plan generator) 
 - **structured_output.py** - 2-step prompt chain again, this time returning a structured JSON as the second response saved to a JSON file
 - **sql_claude.py** - sends session history from an SQL student database to Claude to generate a progress summary
-- **model_comparison.py** - 
+- **model_comparison.py** - compares the differences in output from Sonnet and Haiku Claude API models
 - **vision_test.py** - encodes image of math problem, shares with Claude, and then asks Claude to analyze and solve the problem
-- **problem_chain.py** - 
+- **problem_chain.py** - full multi-step prompt chain that queries SQL, encodes an image, generates further practice problems and writes to sessions in SQL
 - **tool_use_test.py** - requests and writes info to and from SQL DB using Claude API
 
 ## Setup
@@ -24,8 +24,6 @@ pip install anthropic python-dotenv requests
 ANTHROPIC_API_KEY=your_key_here
 4. Run any script with:
 python script_name.py 
-
-## Skills Demonstrated
 
 ## Skills Demonstrated
 
