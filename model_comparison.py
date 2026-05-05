@@ -1,3 +1,8 @@
+""" 
+This script compares the differences in output from Sonnet and Haiku 
+Claude API models.
+"""
+
 import  anthropic
 import os
 from dotenv import load_dotenv
