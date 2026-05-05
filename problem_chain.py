@@ -10,12 +10,39 @@ from dotenv import load_dotenv
 import json
 import base64
 import sys
+import sqlite3
 
 load_dotenv()
 
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
+def get_student_info(student_name):
+    
+    """
+    This function takes student_name as an argument and connects to 
+    students.db and pulls all info for provided student name
+    """
+    
+    conn = sqlite3.connect("students.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT students.id, students.name, students.grade, students.subject
+        FROM students
+        WHERE students.name = ?
+    """, (student_name,))
+    results = cursor.fetchall()
+    conn.close()
+    return results
+
 file_name = input("Please type the name of the file you wish to upload: ")
+print("\n---\n")
+student_name = input("Please enter the name of the student: ")
+
+student_info = get_student_info(student_name)
+
+if student_info == []:
+    print("Student not found.")
+    sys.exit()
 
 try:
     with open(file_name, "rb") as f:
@@ -150,7 +177,7 @@ prompt2 = f"""
             <practice_problem_parameters>
             1. Generate 3 problems
             2. Each problem should be the same math topic as the example problem
-            3. Each problem should be the same grade level as the example problem
+            3. Each problem should be the same grade level as {student_info[0][2]}
             4. Of the 3 practice problems, one should be two levels of difficulty below the example problem, one should be the same difficulty as the example problem and one should be two levels of difficulty above the example problem.
             </practice_problem_parameters>
 
