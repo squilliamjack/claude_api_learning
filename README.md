@@ -10,6 +10,10 @@ A collection of Python scripts built while learning the Anthropic Claude API.
 - **prompt_library.py** - stores reusable prompt templates for 3 different use cases (student feedback email, parent update email and lesson plan generator) 
 - **structured_output.py** - 2-step prompt chain again, this time returning a structured JSON as the second response saved to a JSON file
 - **sql_claude.py** - sends session history from an SQL student database to Claude to generate a progress summary
+- **model_comparison.py** - 
+- **vision_test.py** - encodes image of math problem, shares with Claude, and then asks Claude to analyze and solve the problem
+- **problem_chain.py** - 
+- **tool_use_test.py** - requests and writes info to and from SQL DB using Claude API
 
 ## Setup
 
@@ -32,3 +36,8 @@ python script_name.py
 - SQLite database creation and querying with JOIN operations
 - SQL + Python + Claude pipeline: database → Python → LLM → insight
 - API key security with dotenv and .gitignore
+- Vision API with base64 image encoding
+- Multi-model comparison with token logging
+- Tool use and dispatcher pattern
+- SQLite session logging via Claude tool calls
+- Student-aware pipeline with dynamic output files
