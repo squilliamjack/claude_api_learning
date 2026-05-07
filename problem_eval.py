@@ -98,10 +98,56 @@ results = []
 for problem in problems:
     raw = grade_problem(problem, topic, grade_level, difficulty)
     results.append(json.loads(raw))
+
+total = 0 
+for result in results:
+    total += result["criteria_scores"]["criteria_3"]
+    total += result["criteria_scores"]["criteria_4"]
+    total += result["criteria_scores"]["criteria_5"]
+    total += result["criteria_scores"]["criteria_6"]
+avg = total / 12
+avg_rounded = round(avg, 2)
+
+flagged_results = []
+for result in results:
+    if result["criteria_scores"]["criteria_3"] > 4:
+        flag = {
+                "criteria": "criteria_3",
+                "score": result["criteria_scores"]["criteria_3"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
+    if result["criteria_scores"]["criteria_4"] > 4:
+        flag = {
+                "criteria": "criteria_4",
+                "score": result["criteria_scores"]["criteria_4"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
+    if result["criteria_scores"]["criteria_5"] > 4:
+        flag = {
+                "criteria": "criteria_5",
+                "score": result["criteria_scores"]["criteria_5"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
+    if result["criteria_scores"]["criteria_6"] > 4:
+        flag = {
+                "criteria": "criteria_6",
+                "score": result["criteria_scores"]["criteria_6"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
         
-print(results)
+score_summary = {
+    "problem1_result": results[0],
+    "problem2_result": results[1],
+    "problem3_result": results[2],
+    "average_score": avg_rounded,
+    "flagged_results": flagged_results
+}
 
 with open("practice_problem_eval.json", "w") as f:
-    json.dump(results, f, indent=4)
+    json.dump(score_summary, f, indent=4)
 
 print("\nSaved to practice_problem_eval.json")
