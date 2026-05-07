@@ -214,12 +214,12 @@ practice_problems = client.messages.create(
     ]
 )
 
-# print(practice_problems.content[0].text)
-print(parsed_response1)
+print(practice_problems.content[0].text)
+# print(parsed_response1)
 
 
-# output_file_name = f"{student_info[0][1]}_{datetime.now().strftime('%Y-%m-%d')}.md"
-# with open(output_file_name, "w", encoding="utf-8") as f:
-#     f.write(practice_problems.content[0].text)
+output_file_name = f"{student_info[0][1]}_{datetime.now().strftime('%Y-%m-%d')}.md"
+with open(output_file_name, "w", encoding="utf-8") as f:
+    f.write(practice_problems.content[0].text)
     
-# log_student_session(student_info[0][0], parsed_response1["topic"], "Pending")
+log_student_session(student_info[0][0], parsed_response1["topic"], "Pending")
