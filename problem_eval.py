@@ -65,6 +65,11 @@ def load_prompt(use_case, version):
     return None
 
 def grade_problem(problem, topic, grade_level, difficulty):
+    """
+    This function takes a generated practice problem, grades it 
+    based on a provided rubric and parses the response as a list
+    """ 
+    
     prompt = load_prompt("practice_problem_grader", "v1")
     prompt = prompt.replace("{practice_problem}", problem)
     prompt = prompt.replace("{topic}", topic)
