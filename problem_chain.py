@@ -305,6 +305,13 @@ for result in results:
         flagged_results.append(flag)
         
 def log_call(results, avg_rounded, flagged_results):
+    
+    """ 
+    This function takes the results from the grader functions and writes them 
+    to practice_problem_eval.json while keeping a running tally of the average
+    score of the results
+    """
+    
     log_entry = {
         "problem1_result": results[0],
         "problem2_result": results[1],
@@ -328,15 +335,10 @@ def log_call(results, avg_rounded, flagged_results):
 log_call(results, avg_rounded, flagged_results)
 
 
-# print(practice_problems.content[0].text)
-# print("---")
-# print("---")
-# print("---")
-# print(score_summary)
+print(practice_problems.content[0].text)
 
-
-# output_file_name = f"{student_info[0][1]}_{datetime.now().strftime('%Y-%m-%d')}.md"
-# with open(output_file_name, "w", encoding="utf-8") as f:
-#     f.write(practice_problems.content[0].text)
+output_file_name = f"{student_info[0][1]}_{datetime.now().strftime('%Y-%m-%d')}.md"
+with open(output_file_name, "w", encoding="utf-8") as f:
+    f.write(practice_problems.content[0].text)
     
-# log_student_session(student_info[0][0], parsed_response1["topic"], "Pending")
+log_student_session(student_info[0][0], parsed_response1["topic"], "Pending")
