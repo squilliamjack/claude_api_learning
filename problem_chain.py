@@ -182,7 +182,9 @@ if t == 3:
     print("Error: Failed to get valid JSON after 3 attempts.")
     sys.exit()
 
-
+topic = parsed_response1["topic"]
+grade_level = parsed_response1["grade_level"]
+difficulty = parsed_response1["difficulty"]
 
 prompt2 = f"""
             Your job is to respond with 3 practice problems in md format based on an example problem given by the following dictionary:
@@ -214,12 +216,114 @@ practice_problems = client.messages.create(
     ]
 )
 
-print(practice_problems.content[0].text)
-# print(parsed_response1)
+problems_md = practice_problems.content[0].text
 
+problems_raw = problems_md.split("## Problem")
+problems = problems_raw[1:]
 
-output_file_name = f"{student_info[0][1]}_{datetime.now().strftime('%Y-%m-%d')}.md"
-with open(output_file_name, "w", encoding="utf-8") as f:
-    f.write(practice_problems.content[0].text)
+def load_prompt(use_case, version):
+    with open("prompt_library.json", "r") as f:
+        library = json.load(f)
+    for entry in library:
+        if entry["use_case"] == use_case:
+            return entry.get(version)
+    return None
+
+def grade_problem(problem, topic, grade_level, difficulty):
+    """
+    This function takes a generated practice problem, grades it 
+    based on a provided rubric and parses the response as a list
+    """ 
     
-log_student_session(student_info[0][0], parsed_response1["topic"], "Pending")
+    prompt = load_prompt("practice_problem_grader", "v1")
+    prompt = prompt.replace("{practice_problem}", problem)
+    prompt = prompt.replace("{topic}", topic)
+    prompt = prompt.replace("{grade_level}", grade_level)
+    prompt = prompt.replace("{difficulty}", difficulty)
+    
+    message = client.messages.create(
+        model=model,
+        max_tokens=tokens,
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+        
+    raw = message.content[0].text
+    raw = raw.strip()
+    if raw.startswith("```"):
+        raw = raw.split("\n", 1)[1]
+    if raw.endswith("```"):
+        raw = raw.rsplit("```", 1)[0]
+    raw = raw.strip()
+    
+    return raw
+
+results = []
+for problem in problems:
+    raw = grade_problem(problem, topic, grade_level, difficulty)
+    results.append(json.loads(raw))
+
+total = 0 
+for result in results:
+    total += result["criteria_scores"]["criteria_3"]
+    total += result["criteria_scores"]["criteria_4"]
+    total += result["criteria_scores"]["criteria_5"]
+    total += result["criteria_scores"]["criteria_6"]
+avg = total / 12
+avg_rounded = round(avg, 2)
+
+flagged_results = []
+for result in results:
+    if result["criteria_scores"]["criteria_3"] > 4:
+        flag = {
+                "criteria": "criteria_3",
+                "score": result["criteria_scores"]["criteria_3"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
+    if result["criteria_scores"]["criteria_4"] > 4:
+        flag = {
+                "criteria": "criteria_4",
+                "score": result["criteria_scores"]["criteria_4"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
+    if result["criteria_scores"]["criteria_5"] > 4:
+        flag = {
+                "criteria": "criteria_5",
+                "score": result["criteria_scores"]["criteria_5"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
+    if result["criteria_scores"]["criteria_6"] > 4:
+        flag = {
+                "criteria": "criteria_6",
+                "score": result["criteria_scores"]["criteria_6"],
+                "explanation": result["explanation"]
+            }
+        flagged_results.append(flag)
+        
+score_summary = {
+    "problem1_result": results[0],
+    "problem2_result": results[1],
+    "problem3_result": results[2],
+    "average_score": avg_rounded,
+    "flagged_results": flagged_results
+}
+
+with open("practice_problem_eval.json", "w") as f:
+    json.dump(score_summary, f, indent=4)
+
+# print(practice_problems.content[0].text)
+# print("---")
+# print("---")
+# print("---")
+# print(score_summary)
+
+
+# output_file_name = f"{student_info[0][1]}_{datetime.now().strftime('%Y-%m-%d')}.md"
+# with open(output_file_name, "w", encoding="utf-8") as f:
+#     f.write(practice_problems.content[0].text)
+    
+# log_student_session(student_info[0][0], parsed_response1["topic"], "Pending")
