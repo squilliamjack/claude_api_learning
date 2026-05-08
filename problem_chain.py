@@ -304,16 +304,29 @@ for result in results:
             }
         flagged_results.append(flag)
         
-score_summary = {
-    "problem1_result": results[0],
-    "problem2_result": results[1],
-    "problem3_result": results[2],
-    "average_score": avg_rounded,
-    "flagged_results": flagged_results
-}
+def log_call(results, avg_rounded, flagged_results):
+    log_entry = {
+        "problem1_result": results[0],
+        "problem2_result": results[1],
+        "problem3_result": results[2],
+        "average_score": avg_rounded,
+        "flagged_results": flagged_results
+    }
+    
+    try:
+        with open("practice_problem_eval.json", "r") as f:
+            score_summary = json.load(f)
+    except FileNotFoundError:
+        score_summary = {"runs": [], "overall_score": 0}
+        
+    score_summary["runs"].append(log_entry)
+    score_summary["overall_score"] = sum([run["average_score"] for run in score_summary["runs"]]) / len(score_summary["runs"])
+    
+    with open("practice_problem_eval.json", "w") as f:
+        json.dump(score_summary, f, indent=4)
 
-with open("practice_problem_eval.json", "w") as f:
-    json.dump(score_summary, f, indent=4)
+log_call(results, avg_rounded, flagged_results)
+
 
 # print(practice_problems.content[0].text)
 # print("---")
